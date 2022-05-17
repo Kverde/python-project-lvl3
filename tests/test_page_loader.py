@@ -5,8 +5,8 @@ import os
 from page_loader.page_loader import download
 
 FIXTURES_PATH = './tests/fixtures'
-SOURCE_FILENAME = os.path.join(FIXTURES_PATH, 'source-mysite-com-page-1.html')
-DEST_FILENAME = os.path.join(FIXTURES_PATH, 'dest-mysite-com-page-1.html')
+SOURCE_FILENAME = os.path.join(FIXTURES_PATH, 'source-mysite-com-page-1.txt')
+DEST_FILENAME = os.path.join(FIXTURES_PATH, 'dest-mysite-com-page-1.txt')
 IMAGE_FILENAME = os.path.join(
     FIXTURES_PATH, 'mysite-com-page-1_files', 'image.png')
 
@@ -29,10 +29,12 @@ def test_download(tmp_path, requests_mock):
 
     filename = 'mysite-com-page-1.html'
     file_folder = 'mysite-com-page-1_files'
-    image_name = 'image.png'
+    image_name = 'mysite-com-image.png'
     downloaded_file_path = os.path.join(tmp_path, filename)
     downloaded_folder_path = os.path.join(tmp_path, file_folder)
     downloaded_image_path = os.path.join(tmp_path, file_folder, image_name)
+
+    print(downloaded_image_path)
 
     assert os.path.exists(downloaded_file_path)
     assert os.path.exists(downloaded_folder_path)
@@ -42,6 +44,6 @@ def test_download(tmp_path, requests_mock):
     downloaded_file = read_file(downloaded_file_path)
     assert downloaded_file == correct_file
 
-    correct_image = read_file(DEST_FILENAME, 'rb')
+    correct_image = read_file(IMAGE_FILENAME, 'rb')
     downloaded_image = read_file(downloaded_image_path, 'rb')
     assert downloaded_image == correct_image
