@@ -23,8 +23,6 @@ def test_download(tmp_path, requests_mock):
 
     download(page_url, tmp_path)
 
-    print(downloaded_file_path)
-
     assert os.path.exists(downloaded_file_path)
 
     file_content = read_file(downloaded_file_path)

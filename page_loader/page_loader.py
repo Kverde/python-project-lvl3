@@ -1,21 +1,34 @@
+import requests
+
+import os
+from urllib.parse import urlparse
+
+
+def remove_extension(filename):
+    dot_pos = filename.find('.')
+
+    if dot_pos == -1:
+        return filename
+
+    return filename[:dot_pos]
+
+
+def encode_filename(filename):
+    return ''.join(map(lambda c: c if c.isalnum() else '-', filename))
+
+
+def parese_filename_from_url(url):
+    parsed = urlparse(url)
+    filename = parsed.netloc + remove_extension(parsed.path)
+    return encode_filename(filename) + '.html'
+
 
 def download(url, path=None):
-    pass
+    filename = parese_filename_from_url(url)
+    if path is None:
+        path = os.getcwd()
 
-
-# по умолчанию output это os.getcwd()
-
-"""
-То есть ваша библиотека должна предоставлять модуль page_loader с функцией download(), вызов которой скачивает страницу из сети в указанную существующую директорию и возвращает полный путь к загруженному файлу, включая имя самого файла.
-
-Имя файла должно формироваться следующим образом:
-
-    Берется адрес страницы без схемы и расширения файла, если оно содержится в адресе.
-    Все символы, кроме букв и цифр, заменяются на дефис -.
-    В конце ставится .html.
-
-Пример:
-
-https://ru.hexlet.io/courses
-ru-hexlet-io-courses.html
-"""
+    response = requests.get(url)
+    print(filename)
+    file = open(os.path.join(path, filename), 'w')
+    file.write(response.text)
