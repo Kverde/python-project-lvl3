@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+from progress.bar import Bar
 
 import os
 from urllib.parse import urlparse, urljoin
@@ -111,11 +112,15 @@ def download(url, path=None):
 
     host = get_host(url)
 
+    bar = Bar('Processing', max=4)
+
     images = soup.find_all('img')
     for image in images:
         filename = save_item_to_file(image['src'], host, files_path)
         if filename:
             image['src'] = os.path.join(files_folder, filename)
+
+    bar.next()
 
     links = soup.find_all('link')
     for link in links:
@@ -123,10 +128,14 @@ def download(url, path=None):
         if filename:
             link['href'] = os.path.join(files_folder, filename)
 
+    bar.next()
+
     scripts = soup.find_all('script')
     for script in scripts:
         filename = save_item_to_file(script['src'], host, files_path)
         if filename:
             script['src'] = os.path.join(files_folder, filename)
+
+    bar.finish()
 
     save_page_to_file(os.path.join(path, page_filename), soup.prettify())
