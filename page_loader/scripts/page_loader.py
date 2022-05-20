@@ -10,7 +10,6 @@ def main():
     parser.add_argument('-o', '--output', help='path for save page')
 
     args = parser.parse_args()
-    raise Exception(str(vars(args)) + '|' + str(sys.argv))
     download(args.url, args.output)
 
 
