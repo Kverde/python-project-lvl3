@@ -33,7 +33,7 @@ def download_page(url):
         if response.status_code != 200:
             raise Exception(f'Status code = {response.status_code}')
 
-        return response.text
+        return response.content
     except Exception as e:
         logging.critical(f"Can't download {url}. Error: {e}")
         raise
@@ -94,7 +94,7 @@ def save_item_to_file(url, host, files_path):
 
     if get_ext(file_path) in ['.html', '.css', '.js']:
         file_content = download_page(file_url)
-        save_page_to_file(file_path, file_content)
+        save_file(file_path, file_content)
     else:
         file_content = download_file(file_url)
         save_file(file_path, file_content)

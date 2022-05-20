@@ -1,3 +1,4 @@
+from certifi import contents
 import requests_mock
 
 import os
@@ -20,23 +21,23 @@ APPLICATION_FILENAME = os.path.join(
 PAGE_URL = 'https://mysite.com/page-1.htm'
 
 
-def read_file(filename, mode='rt'):
+def read_file(filename, mode='rb'):
     with open(filename, mode) as f:
         return f.read()
 
 
 def make_site_stub(requests_mock):
-    requests_mock.get(PAGE_URL, text=read_file(SOURCE_FILENAME))
+    requests_mock.get(PAGE_URL, content=read_file(SOURCE_FILENAME))
     requests_mock.get('https://mysite.com/image.png',
                       body=open(IMAGE_FILENAME, 'rb'))
     requests_mock.get('https://mysite.com/script.js',
-                      text=read_file(SCRIPT_FILENAME))
+                      content=read_file(SCRIPT_FILENAME))
     requests_mock.get('https://mysite.com/style.css',
-                      text=read_file(STYLE_FILENAME), status_code=500)
+                      content=read_file(STYLE_FILENAME))
     requests_mock.get('https://mysite.com/courses',
-                      text=read_file(COURSES_FILENAME))
+                      content=read_file(COURSES_FILENAME))
     requests_mock.get('https://mysite.com/assets/application.css',
-                      text=read_file(APPLICATION_FILENAME))
+                      content=read_file(APPLICATION_FILENAME))
 
 
 def test_download(tmp_path, requests_mock):
