@@ -1,4 +1,5 @@
 import argparse
+import sys
 
 from page_loader.page_loader import download
 
@@ -15,3 +16,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+    sys.exit()
