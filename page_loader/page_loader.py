@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 
 import os
 from urllib.parse import urlparse, urljoin
+import logging
 
 
 def remove_extension(filename):
@@ -64,6 +65,8 @@ def save_item_to_file(url, host, files_path):
         filename += '.html'
     file_path = os.path.join(files_path, filename)
 
+    logging.info(f"Downloading '{file_url}' to '{file_path}'")
+
     if get_ext(file_path) in ['.html', '.css', '.js']:
 
         file_content = download_page(file_url)
@@ -113,13 +116,5 @@ def download(url, path=None):
         filename = save_item_to_file(script['src'], host, files_path)
         if filename:
             script['src'] = os.path.join(files_folder, filename)
-
-#        file_url = urljoin(host, image['src'])
-#        file_content = download_file(file_url)
-#        image_filename = parese_filename_from_url(file_url)
-#        image['src'] = os.path.join(files_folder, image_filename)
-#        file_path = os.path.join(files_path, image_filename)
-#        print(file_path)
-#        save_file(file_path, file_content)
 
     save_page_to_file(os.path.join(path, page_filename), soup.prettify())
