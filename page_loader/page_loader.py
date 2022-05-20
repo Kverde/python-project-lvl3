@@ -138,4 +138,8 @@ def download(url, path=None):
 
     bar.finish()
 
-    save_page_to_file(os.path.join(path, page_filename), soup.prettify())
+    full_page_filename = os.path.join(path, page_filename)
+
+    save_page_to_file(full_page_filename, soup.prettify())
+
+    return full_page_filename
