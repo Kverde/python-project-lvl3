@@ -148,6 +148,8 @@ def download(url, path=None):
 
     full_page_filename = os.path.join(path, page_filename)
 
+    logging.info(f"Page '{url}' saved to '{full_page_filename}'")
+
     save_page_to_file(full_page_filename, soup.prettify())
 
     return full_page_filename
