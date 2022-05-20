@@ -30,13 +30,13 @@ def make_site_stub(requests_mock):
     requests_mock.get('https://mysite.com/image.png',
                       body=open(IMAGE_FILENAME, 'rb'))
     requests_mock.get('https://mysite.com/script.js',
-                      body=open(SCRIPT_FILENAME))
+                      text=read_file(SCRIPT_FILENAME))
     requests_mock.get('https://mysite.com/style.css',
-                      body=open(STYLE_FILENAME))
+                      text=read_file(STYLE_FILENAME))
     requests_mock.get('https://mysite.com/courses',
-                      body=open(COURSES_FILENAME))
-    requests_mock.get('https://mysite.com//assets/application.css',
-                      body=open(APPLICATION_FILENAME))
+                      text=read_file(COURSES_FILENAME))
+    requests_mock.get('https://mysite.com/assets/application.css',
+                      text=read_file(APPLICATION_FILENAME))
 
 
 def test_download(tmp_path, requests_mock):
@@ -46,12 +46,21 @@ def test_download(tmp_path, requests_mock):
 
     for root, dirs, files in os.walk(DEST_FILES_PATH, topdown=False):
         for file in files:
+
             sourse_filename = os.path.join(root, file)
             dest_filename = os.path.join(
                 tmp_path, sourse_filename[len(DEST_FILES_PATH) + 1:])
 
+            print(sourse_filename)
+            print(dest_filename)
+
             assert os.path.exists(dest_filename)
 
-            correct_file = read_file(sourse_filename, 'rb')
-            downloaded_file = read_file(dest_filename, 'rb')
+            if os.path.splitext(sourse_filename)[1] in ['.html', '.css', '.js']:
+                correct_file = read_file(sourse_filename)
+                downloaded_file = read_file(dest_filename)
+            else:
+                correct_file = read_file(sourse_filename, 'rb')
+                downloaded_file = read_file(dest_filename, 'rb')
+
             assert correct_file == downloaded_file
