@@ -10,10 +10,12 @@ def main():
     parser.add_argument('--output', help='path for save page')
 
     args = parser.parse_args()
-
-    download(args.url, args.output)
+    try:
+        download(args.url, args.output)
+    except:
+        pass
+    sys.exit()
 
 
 if __name__ == '__main__':
     main()
-    sys.exit()
