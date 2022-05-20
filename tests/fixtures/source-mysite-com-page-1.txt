@@ -22,6 +22,6 @@
   <p>
    Hello, World!
   </p>
-  <img src="image.png"/>
+  <img src="https://mysite.com/image.png"/>
  </body>
 </html>

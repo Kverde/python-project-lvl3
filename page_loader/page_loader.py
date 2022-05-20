@@ -67,13 +67,13 @@ def get_host(url):
     return parsed.scheme + '://' + parsed.netloc
 
 
-def valid_host(url):
+def valid_host(url, host):
     parsed = urlparse(url)
-    return len(parsed.netloc) == 0
+    return len(parsed.netloc) == 0 or get_host(url) == get_host(host)
 
 
 def save_item_to_file(url, host, files_path):
-    if not valid_host(url):
+    if not valid_host(url, host):
         return None
 
     file_url = urljoin(host, url)
