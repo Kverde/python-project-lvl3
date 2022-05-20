@@ -29,18 +29,26 @@ def parese_filename_from_url(url):
 def download_page(url):
     try:
         response = requests.get(url)
+
+        if response.status_code != 200:
+            raise Exception(f'Status code = {response.status_code}')
+
         return response.text
     except Exception as e:
-        logging.critical(f"Can't download {url}. Error: {e.message}")
+        logging.critical(f"Can't download {url}. Error: {e}")
         raise
 
 
 def download_file(url):
     try:
         response = requests.get(url)
+
+        if response.status_code != 200:
+            raise Exception(f'Status code = {response.status_code}')
+
         return response.content
     except Exception as e:
-        logging.critical(f"Can't download {url}. Error: {e.message}")
+        logging.critical(f"Can't download {url}. Error: {e}")
         raise
 
 
@@ -49,7 +57,7 @@ def save_page_to_file(filename, content):
         file = open(filename, 'w')
         file.write(content)
     except Exception as e:
-        logging.critical(f"Can't save file {filename}. Error: {e.message}")
+        logging.critical(f"Can't save file {filename}. Error: {e}")
         raise
 
 
@@ -58,7 +66,7 @@ def save_file(filename, content):
         file = open(filename, 'wb')
         file.write(content)
     except Exception as e:
-        logging.critical(f"Can't save file {filename}. Error: {e.message}")
+        logging.critical(f"Can't save file {filename}. Error: {e}")
         raise
 
 

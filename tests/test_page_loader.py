@@ -32,7 +32,7 @@ def make_site_stub(requests_mock):
     requests_mock.get('https://mysite.com/script.js',
                       text=read_file(SCRIPT_FILENAME))
     requests_mock.get('https://mysite.com/style.css',
-                      text=read_file(STYLE_FILENAME))
+                      text=read_file(STYLE_FILENAME), status_code=500)
     requests_mock.get('https://mysite.com/courses',
                       text=read_file(COURSES_FILENAME))
     requests_mock.get('https://mysite.com/assets/application.css',
