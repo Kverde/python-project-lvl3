@@ -130,7 +130,7 @@ def download(url, path=None):
 
     bar.next()
 
-    scripts = soup.find_all('script')
+    scripts = soup.find_all('script', src=True)
     for script in scripts:
         filename = save_item_to_file(script['src'], host, files_path)
         if filename:

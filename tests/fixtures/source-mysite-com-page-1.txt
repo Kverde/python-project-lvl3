@@ -12,9 +12,11 @@
   </script>
   <script src="https://ru.hexlet.io/packs/js/runtime.js">
   </script>
-  <link href="style.css" rel="stylesheet"/>
-  <script src="script.js">
-  </script>
+  <link href="style.css" rel="stylesheet">
+   <script src="script.js">
+   </script>
+  </link>
+    <script>test = 3</script>
  </head>
  <body>
   <p>
