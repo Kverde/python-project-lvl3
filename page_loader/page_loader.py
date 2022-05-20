@@ -26,23 +26,39 @@ def parese_filename_from_url(url):
 
 
 def download_page(url):
-    response = requests.get(url)
-    return response.text
+    try:
+        response = requests.get(url)
+        return response.text
+    except Exception as e:
+        logging.critical(f"Can't download {url}. Error: {e.message}")
+        raise
 
 
 def download_file(url):
-    response = requests.get(url)
-    return response.content
+    try:
+        response = requests.get(url)
+        return response.content
+    except Exception as e:
+        logging.critical(f"Can't download {url}. Error: {e.message}")
+        raise
 
 
 def save_page_to_file(filename, content):
-    file = open(filename, 'w')
-    file.write(content)
+    try:
+        file = open(filename, 'w')
+        file.write(content)
+    except Exception as e:
+        logging.critical(f"Can't save file {filename}. Error: {e.message}")
+        raise
 
 
 def save_file(filename, content):
-    file = open(filename, 'wb')
-    file.write(content)
+    try:
+        file = open(filename, 'wb')
+        file.write(content)
+    except Exception as e:
+        logging.critical(f"Can't save file {filename}. Error: {e.message}")
+        raise
 
 
 def get_host(url):
@@ -68,11 +84,7 @@ def save_item_to_file(url, host, files_path):
     logging.info(f"Downloading '{file_url}' to '{file_path}'")
 
     if get_ext(file_path) in ['.html', '.css', '.js']:
-
         file_content = download_page(file_url)
-        if get_ext(file_path) == '.js':
-            print(file_content)
-            print(file_path)
         save_page_to_file(file_path, file_content)
     else:
         file_content = download_file(file_url)
