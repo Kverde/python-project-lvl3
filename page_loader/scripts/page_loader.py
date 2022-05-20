@@ -7,6 +7,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('url', help='page URL')
     parser.add_argument('--output', help='path for save page')
+    parser.add_argument('-o', action='store_true', help='path for save page')
 
     args = parser.parse_args()
     download(args.url, args.output)
