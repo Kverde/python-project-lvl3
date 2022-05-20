@@ -1,6 +1,3 @@
-from certifi import contents
-import requests_mock
-
 import os
 
 from page_loader.page_loader import download
@@ -57,7 +54,9 @@ def test_download(tmp_path, requests_mock):
 
             assert os.path.exists(dest_filename)
 
-            if os.path.splitext(sourse_filename)[1] in ['.html', '.css', '.js']:
+            ext = os.path.splitext(sourse_filename)[1]
+
+            if ext in ['.html', '.css', '.js']:
                 correct_file = read_file(sourse_filename)
                 downloaded_file = read_file(dest_filename)
             else:
